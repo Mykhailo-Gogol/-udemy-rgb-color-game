@@ -446,9 +446,8 @@
 // }
 
 // The Great RGB Color Game
-
-let colors = generateRandomColors(6);
-
+let numOfSquares = 6;
+let colors = generateRandomColors(numOfSquares);
 let squares = document.querySelectorAll('.square');
 let pickedColor = pickColor();
 let colorDisplay = document.getElementById('colorDisplay');
@@ -456,18 +455,52 @@ let messageDisplay = document.getElementById('message');
 let h1 = document.querySelector('h1');
 let resetButton = document.getElementById('reset')
 let easyBtn = document.getElementById('easy');
-let hardBtn = document.getElementById('hard')
+let hardBtn = document.getElementById('hard');
 
-easyBtn.addEventListener('cleck', function () {
-
+easyBtn.addEventListener('click', function () {
+  // reset heading color
+  h1.style.backgroundColor = '#232323';
+  messageDisplay.textContent = '';
+  easyBtn.classList.add('selected');
+  hardBtn.classList.remove('selected');
+  numOfSquares = 3;
+  colors = generateRandomColors(numOfSquares);
+  pickedColor = pickColor();
+  colorDisplay.textContent = pickedColor;
+  for (let i = 0; i < squares.length; i++) {
+    if (colors[i]) {
+      squares[i].style.backgroundColor = colors[i];
+    } else {
+      squares[i].style.display = 'none';
+    }
+  }
 });
 
+hardBtn.addEventListener('click', function () {
+  // reset heading color
+  h1.style.backgroundColor = '#232323';
+  messageDisplay.textContent = '';
+  easyBtn.classList.remove('selected');
+  hardBtn.classList.add('selected');
+  numOfSquares = 6;
+  colors = generateRandomColors(numOfSquares);
+  pickedColor = pickColor();
+  colorDisplay.textContent = pickedColor;
+  for (let i = 0; i < squares.length; i++) {
+    squares[i].style.backgroundColor = colors[i];
+    squares[i].style.display = 'block';
+  }
+}
+);
+
 resetButton.addEventListener('click', function () {
+  // reset message span
+  messageDisplay.textContent = '';
   // reset heading color
   h1.style.backgroundColor = '#232323';
   resetButton.textContent = 'New Colors';
   // generate all new colors
-  colors = generateRandomColors(6);
+  colors = generateRandomColors(numOfSquares);
   // pick a new random color from arr
   pickedColor = pickColor();
   // change colorDisplay to match picked color
